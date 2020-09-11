@@ -3,11 +3,41 @@ import ReactDOM from 'react-dom'
 
 const StatisticLine = (props) => {
   return (
-    <div>
-      <p>
-        {props.text} {props.value} {props.symbol}
-      </p>
-    </div>
+    <table>
+      <tbody>
+        <tr>
+            <td>  {props.textGood}</td>
+            <td>  {props.valueGood}</td>
+           
+        </tr>
+        <tr>
+            <td>  {props.textNeutral}</td>
+            <td>  {props.valueNeutral}</td>
+           
+        </tr>
+        <tr>
+            <td>  {props.textBad}</td>
+            <td>  {props.valueBad}</td>
+            
+        </tr>
+        <tr>
+            <td>  {props.textAll}</td>
+            <td>  {props.valueAll}</td>
+            
+        </tr>
+        <tr>
+            <td>  {props.textAverage}</td>
+            <td>  {props.valueAverage}</td>
+            
+        </tr>
+        <tr>
+            <td>  {props.textPositive}</td>
+            <td>  {props.valuePositive}</td>
+            <td>  {props.symbol}</td>
+        </tr>
+       </tbody>
+    </table>
+    
   )
 }
 
@@ -23,12 +53,14 @@ const Statistics = (props) => {
   else if(props.allClicks.length !== 0){
     return(
       <div>
-      <StatisticLine text="good" value ={props.stats1}/>
-      <StatisticLine text="neutral" value={props.stats2}/>
-      <StatisticLine text="bad" value={props.stats3}/>
-      <StatisticLine text= "all" value={props.stats4}/>
-      <StatisticLine text="average" value={props.stats5}/>
-      <StatisticLine text="positive" value={props.stats6} symbol={props.symbol}  />
+      <StatisticLine textGood="good" valueGood ={props.stats1}
+        textNeutral="neutral" valueNeutral={props.stats2}
+        textBad="bad" valueBad={props.stats3}
+        textAll="all" valueAll={props.stats4}
+        textAverage="average" valueAverage={props.stats5}
+        textPositive="positive" valuePositive={props.stats6} symbol={props.symbol}        
+        />
+      
 
     </div>
     )
@@ -88,9 +120,7 @@ const handleNeutralClick = () => {
        
       <h1>statistics</h1>
       <Statistics allClicks={allClicks} stats1={good} stats2 = {neutral} stats3 = {bad} 
-      stats4 = {all} stats5 = {average} stats6 = {positive} symbol={symbol}/>
-
-      
+                stats4 = {all} stats5 = {average} stats6 = {positive} symbol={symbol}/>
      
      </div>
       
