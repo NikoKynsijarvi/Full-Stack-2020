@@ -10,6 +10,7 @@ const Button = ({onClick, text}) => (
   </button>
 )
 
+
 const Anecdote = (props) => {
   if (props.allClicks.length === 0) {
     return (
@@ -24,10 +25,9 @@ const Anecdote = (props) => {
     return (
         <div>
            <Button onClick={props.handleClick} text= 'Next anecdote'/>
-           <Button onClick={props.handleVoteClick} text= 'Vote'/>
+           <Button onClick={props.handleVoteClick} text='Vote'/>
            <p>{props.anecdotes[props.selected]} </p>
-            <p> has {props.votes} votes </p>
-           
+           <p>Vote {props.votes}</p>
         </div>
 
     )
@@ -40,34 +40,43 @@ const Anecdote = (props) => {
 }
 
 
+
 const App = (props) => {
   const [selected, setSelected] = useState(0)
   const max = anecdotes.length-1
   const min = 0
   const randomi =  Math.floor(Math.random() * (max - min + 1)) + min
   const [allClicks, setAll] = useState([])
-  const points = [0, 0, 0, 0, 0, 0]
+  const points = [0,0,0,0,0,0]
+  const [ counter, setCounter ] = useState(points[selected])
+  let votes = counter
+  console.log(votes)
+  const copy = {...points}
+  copy[selected] = votes
+  console.log(copy[selected], 'Joo')
+  
+  points[props.random] = votes
+  const handleVoteClick = () => {
+      
+      setCounter(counter+1)
+          
+  }
   
 
-  console.log('randomi numero on', randomi )
-  console.log('selected on', selected)
-  console.log( points[selected])
-
+ 
   const handleClick = () => {
     setSelected(randomi)
     setAll(allClicks.concat('Add'))
+    setCounter(0)
+  
   }
-  const handleVoteClick = () => {
-    points[selected] +=1
-    console.log(points[selected])
-  }
+ 
 
   return (
     <div>
      <Anecdote allClicks ={allClicks } handleClick ={handleClick}
-      anecdotes={anecdotes} selected={selected} handleVoteClick={handleVoteClick} votes={points[selected]}
-      
-      />
+      anecdotes={anecdotes} selected={selected} handleVoteClick={handleVoteClick} votes={copy[selected]}
+      />     
     </div>
   )
 }
