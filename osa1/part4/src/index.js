@@ -27,7 +27,7 @@ const Anecdote = (props) => {
            <Button onClick={props.handleClick} text= 'Next anecdote'/>
            <Button onClick={props.handleVoteClick} text='Vote'/>
            <p>{props.anecdotes[props.selected]} </p>
-           <p>Vote {props.votes}</p>
+           <p>Votes {props.votes}</p>
         </div>
 
     )
@@ -49,16 +49,18 @@ const App = (props) => {
   const [allClicks, setAll] = useState([])
   const points = [0,0,0,0,0,0]
   const [ counter, setCounter ] = useState(points[selected])
+  
   let votes = counter
-  console.log(votes)
   const copy = {...points}
   copy[selected] = votes
-  console.log(copy[selected], 'Joo')
   
-  points[props.random] = votes
+  const copy2 = {...copy}
+  console.log(copy2[selected])
   const handleVoteClick = () => {
-      
-      setCounter(counter+1)
+      if(copy2[selected] === copy[selected])
+      setCounter(copy2[selected]+1)
+      else if (copy2[selected] != copy[selected])
+      setCounter(counter + 1)
           
   }
   
