@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const PersonForm = (props) => (
 	<form onSubmit={props.addName}>
@@ -48,15 +49,20 @@ const Filter = (props) => (
 );
 
 const App = () => {
-	const [persons, setPersons] = useState([
-		{ name: "Arto Hellas", number: "040 1234567", id: 1 },
-		{ name: "Dan Abramov", number: "39-22-5323523", id: 2 },
-		{ name: "Ada Lovelace", number: "050 7676123", id: 3 },
-	]);
+	const [persons, setPersons] = useState([]);
 	const [newName, setNewName] = useState("");
 	const [newNumber, setNewNumber] = useState("");
 	const [showAll, setShowAll] = useState(false);
 	const [newName2, setNewName2] = useState("");
+
+	useEffect(() => {
+		console.log("effect");
+		axios.get("http://localhost:3001/persons").then((response) => {
+			console.log("promise fulfilled");
+			setPersons(response.data);
+		});
+	}, []);
+	console.log("render", persons.length, "notes");
 
 	const addName = (event) => {
 		event.preventDefault();
@@ -100,10 +106,6 @@ const App = () => {
 			/>
 
 			<h2>Add a new</h2>
-
-			<h2>Numbers</h2>
-			{}
-
 			<PersonForm
 				addName={addName}
 				newName={newName}
@@ -111,6 +113,8 @@ const App = () => {
 				handleNumberChange={handleNumberChange}
 				handleNameChange={handleNameChange}
 			/>
+			<h2>Numbers</h2>
+			{}
 
 			<Names persons={persons} />
 		</div>
