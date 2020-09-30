@@ -3,7 +3,7 @@ import axios from "axios";
 
 const Result = (props) => (
 	<div>
-		<h1>{props.name}</h1>
+		<h1>{props.nameLower}</h1>
 		{props.capital}
 		{props.population}
 		<h1>languages</h1>
@@ -11,7 +11,14 @@ const Result = (props) => (
 		{props.flag}
 	</div>
 );
-
+const CountryForm = (props) => (
+	<form onSubmit={props.addCountry}>
+		<div>
+			find countries{" "}
+			<input value={props.newCountry} onChange={props.handleCountryChange} />
+		</div>
+	</form>
+);
 const App = () => {
 	const [newCountry, setNewCountry] = useState("");
 	const [countries, setCountry] = useState([]);
@@ -59,11 +66,12 @@ const App = () => {
 	const kieli = countrysLanguage[indeksi];
 
 	const nameLower = countryName.filter((element) => {
-		const newName = element.toLowerCase();
+		const newName = element;
 		return newName.toLowerCase().indexOf(newCountry.toLowerCase()) > -1;
 	});
-	console.log(nameLower);
+
 	const nation = countryName[indeksi];
+	console.log(nameLower);
 
 	const capital = (
 		<div>
@@ -88,7 +96,7 @@ const App = () => {
 		</div>
 	);
 
-	if (indeksi > 0) {
+	if (nameLower.length === 1 && indeksi > 0) {
 		const languages = (
 			<div>
 				{kieli.map((name) => (
@@ -102,25 +110,42 @@ const App = () => {
 		);
 		return (
 			<div>
-				<form onSubmit={addCountry}>
-					<div>
-						find countries{" "}
-						<input value={newCountry} onChange={handleCountryChange} />
-					</div>
-				</form>
+				<CountryForm
+					addCountry={addCountry}
+					newCountry={newCountry}
+					handleCountryChange={handleCountryChange}
+				/>
+				<Result
+					nameLower={nameLower}
+					capital={capital}
+					population={population}
+					languages={languages}
+					flag={flag}
+				/>
+			</div>
+		);
+	} else if (nameLower.length < 10) {
+		return (
+			<div>
+				<CountryForm
+					addCountry={addCountry}
+					newCountry={newCountry}
+					handleCountryChange={handleCountryChange}
+				/>
+
 				{nameLower}
 			</div>
 		);
 	} else
 		return (
 			<div>
-				<form onSubmit={addCountry}>
-					<div>
-						find countries{" "}
-						<input value={newCountry} onChange={handleCountryChange} />
-					</div>
-				</form>
-				{nameLower}
+				<CountryForm
+					addCountry={addCountry}
+					newCountry={newCountry}
+					handleCountryChange={handleCountryChange}
+				/>
+
+				<p>Too many matches, specify another filter</p>
 			</div>
 		);
 };
