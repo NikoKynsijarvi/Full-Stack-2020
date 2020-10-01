@@ -24,8 +24,6 @@ const App = () => {
 	const [newCountry, setNewCountry] = useState("");
 	const [countries, setCountry] = useState([]);
 
-	const name = newCountry;
-
 	useEffect(() => {
 		console.log("effect");
 		axios.get("https://restcountries.eu/rest/v2/all").then((response) => {
@@ -61,10 +59,6 @@ const App = () => {
 	const indeksi = countryName.indexOf(nameLower[0]);
 
 	const kieli = countrysLanguage[indeksi];
-	const indeksi2 = countries.map((name) => name.name.toLowerCase());
-
-	console.log(indeksi2);
-	console.log(indeksi2.indexOf(name));
 
 	const capital = capitals[indeksi];
 
