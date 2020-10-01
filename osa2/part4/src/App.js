@@ -4,8 +4,9 @@ import axios from "axios";
 const Result = (props) => (
 	<div>
 		<h1>{props.nameLower}</h1>
-		{props.capital}
-		{props.population}
+		<p>capital {props.capital}</p>
+		<p>population {props.population}</p>
+
 		<h1>languages</h1>
 		{props.languages}
 		{props.flag}
@@ -26,17 +27,9 @@ const App = () => {
 	const name = newCountry;
 
 	useEffect(() => {
-		//console.log("effect");
+		console.log("effect");
 		axios.get("https://restcountries.eu/rest/v2/all").then((response) => {
-			//console.log("promise fulfilled");
-			setCountry(response.data);
-		});
-	}, []);
-
-	useEffect(() => {
-		//console.log("effect");
-		axios.get("https://weatherstack.com/").then((response) => {
-			//console.log("promise fulfilled");
+			console.log("promise fulfilled");
 			setCountry(response.data);
 		});
 	}, []);
@@ -73,16 +66,9 @@ const App = () => {
 	console.log(indeksi2);
 	console.log(indeksi2.indexOf(name));
 
-	const capital = (
-		<div>
-			<p>capital {capitals[indeksi]}</p>
-		</div>
-	);
-	const population = (
-		<div>
-			<p>population {countrysPopula[indeksi]}</p>
-		</div>
-	);
+	const capital = capitals[indeksi];
+
+	const population = countrysPopula[indeksi];
 	const flag = (
 		<div>
 			<object>
@@ -96,10 +82,7 @@ const App = () => {
 		</div>
 	);
 
-	if (nameLower.length === 1 && indeksi > 0) {
-		console.log(nameLower);
-		console.log(indeksi2.indexOf(nameLower[0]));
-		console.log(indeksi);
+	if (nameLower.length === 1) {
 		const languages = (
 			<div>
 				{kieli.map((name) => (
