@@ -61,17 +61,17 @@ const App = () => {
 	const countrysLanguage = countries.map((langua) => langua.languages);
 	const countrysFlag = countries.map((flag) => flag.flag);
 
-	const indeksi = countryName.indexOf(name);
-
-	const kieli = countrysLanguage[indeksi];
-
 	const nameLower = countryName.filter((element) => {
 		const newName = element;
 		return newName.toLowerCase().indexOf(newCountry.toLowerCase()) > -1;
 	});
+	const indeksi = countryName.indexOf(nameLower[0]);
 
-	const nation = countryName[indeksi];
-	console.log(nameLower);
+	const kieli = countrysLanguage[indeksi];
+	const indeksi2 = countries.map((name) => name.name.toLowerCase());
+
+	console.log(indeksi2);
+	console.log(indeksi2.indexOf(name));
 
 	const capital = (
 		<div>
@@ -97,6 +97,9 @@ const App = () => {
 	);
 
 	if (nameLower.length === 1 && indeksi > 0) {
+		console.log(nameLower);
+		console.log(indeksi2.indexOf(nameLower[0]));
+		console.log(indeksi);
 		const languages = (
 			<div>
 				{kieli.map((name) => (
@@ -133,7 +136,9 @@ const App = () => {
 					handleCountryChange={handleCountryChange}
 				/>
 
-				{nameLower}
+				{nameLower.map((v) => (
+					<div> {v}</div>
+				))}
 			</div>
 		);
 	} else
