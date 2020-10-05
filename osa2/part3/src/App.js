@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import personService from "./services/persons";
+import persons from "./services/persons";
 
 const PersonForm = (props) => (
 	<form onSubmit={props.addName}>
@@ -19,10 +21,35 @@ const PersonForm = (props) => (
 
 const Names = (props) =>
 	props.persons.map((name) => (
-		<p>
-			{" "}
-			{name.name} {name.number}
-		</p>
+		<div>
+			<p>
+				{" "}
+				{name.name} {name.number}{" "}
+				<button
+					onClick={() => {
+						var result = window.confirm("delete " + name.name + "?");
+						if (result === true) {
+							personService
+								.deleteThis(name.id)
+
+								.then((initialPersons) => {
+									console.log(initialPersons);
+
+									personService.getAll().then((initialPersons) => {
+										props.setPersons(initialPersons);
+										console.log(initialPersons);
+									});
+
+									return;
+								});
+						} else {
+						}
+					}}
+				>
+					delete
+				</button>
+			</p>
+		</div>
 	));
 
 const Name = ({ name }) => {
@@ -56,29 +83,30 @@ const App = () => {
 	const [newName2, setNewName2] = useState("");
 
 	useEffect(() => {
-		console.log("effect");
-		axios.get("http://localhost:3001/persons").then((response) => {
-			console.log("promise fulfilled");
-			setPersons(response.data);
+		personService.getAll().then((initialPersons) => {
+			setPersons(initialPersons);
+			console.log(initialPersons);
 		});
 	}, []);
-	console.log("render", persons.length, "notes");
 
 	const addName = (event) => {
 		event.preventDefault();
 		const nameObject = {
 			name: newName,
 			number: newNumber,
-			id: persons.length + 1,
+
+			id: persons[persons.length - 1].id + 1,
 		};
 
-		console.log(newNumber);
-		console.log(newName);
-
-		setPersons(persons.concat(nameObject));
-		setNewNumber("");
-		setNewName("");
+		if (nameObject.name.length > 0) {
+			personService.create(nameObject).then((returnedName) => {
+				setPersons(persons.concat(returnedName));
+				setNewName("");
+				setNewNumber("");
+			});
+		}
 	};
+	console.log(newName2);
 	const handleNameChange = (event) => {
 		setNewName(event.target.value);
 	};
@@ -88,8 +116,9 @@ const App = () => {
 	const handleNameChange2 = (event) => {
 		setNewName2(event.target.value);
 	};
+
 	const results = persons.filter((name) => name.name === newName);
-	if (results.length > 0) {
+	if (results.length > 1) {
 		return alert(newName + " " + "is already added to phonebook");
 	}
 	const namesToShow = showAll
@@ -113,10 +142,11 @@ const App = () => {
 				handleNumberChange={handleNumberChange}
 				handleNameChange={handleNameChange}
 			/>
+
 			<h2>Numbers</h2>
 			{}
 
-			<Names persons={persons} />
+			<Names persons={persons} setPersons={setPersons} />
 		</div>
 	);
 };
