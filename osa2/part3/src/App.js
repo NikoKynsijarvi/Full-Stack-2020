@@ -88,7 +88,14 @@ const App = () => {
 			console.log(initialPersons);
 		});
 	}, []);
+	const results = persons.filter((name) => name.name === newName);
+	if (results.length > 1) {
+		setNewName("");
 
+		personService.deleteThis(persons.pop().id).then((initialPersons) => {});
+
+		return alert(newName + " " + "is already added to phonebook");
+	}
 	const addName = (event) => {
 		event.preventDefault();
 		const nameObject = {
@@ -117,10 +124,6 @@ const App = () => {
 		setNewName2(event.target.value);
 	};
 
-	const results = persons.filter((name) => name.name === newName);
-	if (results.length > 1) {
-		return alert(newName + " " + "is already added to phonebook");
-	}
 	const namesToShow = showAll
 		? persons
 		: persons.filter((name) => name.name === newName2);
