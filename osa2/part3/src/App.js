@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import personService from "./services/persons";
 import persons from "./services/persons";
+import Notification from "./components/Notifications";
+import "./index.css";
 
 const PersonForm = (props) => (
 	<form onSubmit={props.addName}>
@@ -37,7 +39,10 @@ const Names = (props) =>
 
 									personService.getAll().then((initialPersons) => {
 										props.setPersons(initialPersons);
-										console.log(initialPersons);
+										props.setErrorMessage(`Deleted ${name.name} `);
+										setTimeout(() => {
+											props.setErrorMessage(null);
+										}, 5000);
 									});
 
 									return;
@@ -59,6 +64,7 @@ const Name = ({ name }) => {
 		</li>
 	);
 };
+
 const Filter = (props) => (
 	<div>
 		<form>
@@ -81,6 +87,7 @@ const App = () => {
 	const [newNumber, setNewNumber] = useState("");
 	const [showAll, setShowAll] = useState(false);
 	const [newName2, setNewName2] = useState("");
+	const [errorMessage, setErrorMessage] = useState("");
 
 	useEffect(() => {
 		personService.getAll().then((initialPersons) => {
@@ -98,6 +105,7 @@ const App = () => {
 	}
 	const addName = (event) => {
 		event.preventDefault();
+
 		const nameObject = {
 			name: newName,
 			number: newNumber,
@@ -112,6 +120,10 @@ const App = () => {
 				setNewNumber("");
 			});
 		}
+		setErrorMessage(`Added ${nameObject.name} `);
+		setTimeout(() => {
+			setErrorMessage(null);
+		}, 5000);
 	};
 	console.log(newName2);
 	const handleNameChange = (event) => {
@@ -131,6 +143,7 @@ const App = () => {
 	return (
 		<div>
 			<h2>Phonebook</h2>
+			<Notification message={errorMessage} />
 			<Filter
 				newName2={newName2}
 				handleNameChange2={handleNameChange2}
@@ -149,7 +162,11 @@ const App = () => {
 			<h2>Numbers</h2>
 			{}
 
-			<Names persons={persons} setPersons={setPersons} />
+			<Names
+				persons={persons}
+				setPersons={setPersons}
+				setErrorMessage={setErrorMessage}
+			/>
 		</div>
 	);
 };
