@@ -1,25 +1,9 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import personService from "./services/persons";
-import persons from "./services/persons";
 import Notification from "./components/Notifications";
+import PersonForm from "./components/personform";
+import Filter from "./components/filter";
 import "./index.css";
-
-const PersonForm = (props) => (
-	<form onSubmit={props.addName}>
-		<div>
-			name: <input value={props.newName} onChange={props.handleNameChange} />
-		</div>
-
-		<div>
-			number:{" "}
-			<input value={props.newNumber} onChange={props.handleNumberChange} />
-		</div>
-		<div>
-			<button type="submit">add</button>
-		</div>
-	</form>
-);
 
 const Names = (props) =>
 	props.persons.map((name) => (
@@ -39,6 +23,7 @@ const Names = (props) =>
 
 									personService.getAll().then((initialPersons) => {
 										props.setPersons(initialPersons);
+
 										props.setErrorMessage(`Deleted ${name.name} `);
 										setTimeout(() => {
 											props.setErrorMessage(null);
@@ -57,30 +42,6 @@ const Names = (props) =>
 		</div>
 	));
 
-const Name = ({ name }) => {
-	return (
-		<li>
-			{name.name} {name.number}
-		</li>
-	);
-};
-
-const Filter = (props) => (
-	<div>
-		<form>
-			<div>
-				filter with:
-				<input value={props.newName2} onChange={props.handleNameChange2} />
-			</div>
-		</form>
-		<ul>
-			{props.namesToShow.map((name) => (
-				<Name key={name.name} name={name} />
-			))}
-		</ul>
-	</div>
-);
-
 const App = () => {
 	const [persons, setPersons] = useState([]);
 	const [newName, setNewName] = useState("");
@@ -98,10 +59,34 @@ const App = () => {
 	const results = persons.filter((name) => name.name === newName);
 	if (results.length > 1) {
 		setNewName("");
-
+		var nimet = persons.map((name) => name.name);
+		console.log(results);
 		personService.deleteThis(persons.pop().id).then((initialPersons) => {});
-
-		return alert(newName + " " + "is already added to phonebook");
+		var id = results[0].id;
+		console.log(id);
+		var r = window.confirm(
+			newName +
+				" " +
+				"is already added to phonebook, replace old number with a new one?"
+		);
+		if (r === true) {
+			var nameObject = {
+				name: newName,
+				number: newNumber,
+				id: id,
+			};
+			personService.update(id, nameObject).then((initialPersons) => {
+				personService.getAll().then((initialPersons) => {
+					setPersons(initialPersons);
+				});
+			});
+			setErrorMessage(
+				`Changed ${nameObject.name} number to ${nameObject.number} `
+			);
+			setTimeout(() => {
+				setErrorMessage(null);
+			}, 5000);
+		}
 	}
 	const addName = (event) => {
 		event.preventDefault();
@@ -120,6 +105,7 @@ const App = () => {
 				setNewNumber("");
 			});
 		}
+
 		setErrorMessage(`Added ${nameObject.name} `);
 		setTimeout(() => {
 			setErrorMessage(null);
@@ -166,6 +152,7 @@ const App = () => {
 				persons={persons}
 				setPersons={setPersons}
 				setErrorMessage={setErrorMessage}
+				newName2={newName2}
 			/>
 		</div>
 	);
