@@ -111,7 +111,7 @@ const App = () => {
 			setErrorMessage(null);
 		}, 5000);
 	};
-	console.log(newName2);
+
 	const handleNameChange = (event) => {
 		setNewName(event.target.value);
 	};
