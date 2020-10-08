@@ -48,7 +48,7 @@ const App = () => {
 	const [newNumber, setNewNumber] = useState("");
 	const [showAll, setShowAll] = useState(false);
 	const [newName2, setNewName2] = useState("");
-	const [errorMessage, setErrorMessage] = useState("");
+	const [errorMessage, setErrorMessage] = useState(null);
 
 	useEffect(() => {
 		personService.getAll().then((initialPersons) => {
