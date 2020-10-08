@@ -2,6 +2,9 @@ const express = require("express");
 const app = express();
 
 app.use(express.json());
+const cors = require("cors");
+app.use(cors());
+app.use(express.static("build"));
 
 let notes = [
 	{
@@ -24,12 +27,10 @@ let notes = [
 	},
 ];
 
-app.get("/", (req, res) => {
-	res.send("<h1>Hello World!</h1>");
-});
 app.get("/api/notes", (req, res) => {
 	res.json(notes);
 });
+
 const generateId = () => {
 	const maxId = notes.length > 0 ? Math.max(...notes.map((n) => n.id)) : 0;
 	return maxId + 1;
@@ -67,7 +68,7 @@ app.delete("/api/notes/:id", (request, response) => {
 	response.status(204).end();
 });
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
 	console.log(`Server running on port ${PORT}`);
 });

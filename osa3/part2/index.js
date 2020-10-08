@@ -4,13 +4,15 @@ const app = express();
 var morgan = require("morgan");
 
 app.use(express.json());
+morgan.token("content", (request) => {
+	if (request.method === "POST") {
+		return JSON.stringify(request.body);
+	} else {
+		return;
+	}
+});
+app.use(morgan(":method :url :status :response-time ms :content"));
 
-app.use(morgan("tiny"));
-
-const unknownEndpoint = (request, response) => {
-	response.status(404).send({ error: "unknown endpoint" });
-};
-var h = "";
 let persons = [
 	{
 		id: 1,
@@ -66,12 +68,9 @@ app.post("/api/persons", (request, response) => {
 		name: body.name,
 		number: body.number,
 	};
-	var h = JSON.stringify(person);
-	console.log(h);
 
 	persons = persons.concat(person);
 	response.json(person);
-	return h;
 });
 
 var d = new Date();
@@ -86,8 +85,8 @@ app.get("/", (req, res) => {
 	res.send("<h1>Hello World!</h1>");
 });
 
-app.get("/api/notes", (req, res) => {
-	res.json(notes);
+app.get("/api/persons", (req, res) => {
+	res.json(persons);
 });
 app.get("/api/persons/:id", (request, response) => {
 	const id = Number(request.params.id);
@@ -100,7 +99,12 @@ app.get("/api/persons/:id", (request, response) => {
 	}
 });
 
-app.use(unknownEndpoint);
+app.delete("/api/persons/:id", (request, response) => {
+	const id = Number(request.params.id);
+	persons = persons.filter((person) => person.id !== id);
+
+	response.status(204).end();
+});
 
 const PORT = 3001;
 app.listen(PORT, () => {
