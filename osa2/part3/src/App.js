@@ -57,6 +57,7 @@ const App = () => {
 		});
 	}, []);
 	const results = persons.filter((name) => name.name === newName);
+	console.log(results);
 	if (results.length > 1) {
 		setNewName("");
 		var nimet = persons.map((name) => name.name);
