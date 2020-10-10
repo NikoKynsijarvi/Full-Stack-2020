@@ -99,18 +99,43 @@ const App = () => {
 			id: persons[persons.length - 1].id + 1,
 		};
 
-		if (nameObject.name.length > 0) {
-			personService.create(nameObject).then((returnedName) => {
+		personService
+			.create(nameObject)
+			.then((returnedName) => {
 				setPersons(persons.concat(returnedName));
 				setNewName("");
 				setNewNumber("");
+				console.log("joo");
+				setErrorMessage(`Added ${nameObject.name} `);
+				setTimeout(() => {
+					setErrorMessage(null);
+				}, 5000);
+			})
+			.catch((error) => {
+				console.log(error.response.data);
+				if (nameObject.number.length < 8) {
+					setErrorMessage(`${newNumber} is too short`);
+					setTimeout(() => {
+						setErrorMessage(null);
+					}, 5000);
+					setNewName("");
+					setNewNumber("");
+				} else if (nameObject.name.length < 3) {
+					setErrorMessage(`${newName} is too short, give longer name`);
+					setTimeout(() => {
+						setErrorMessage(null);
+					}, 5000);
+					setNewName("");
+					setNewNumber("");
+				} else {
+					setErrorMessage("Name must be unique");
+					setTimeout(() => {
+						setErrorMessage(null);
+					}, 5000);
+					setNewName("");
+					setNewNumber("");
+				}
 			});
-		}
-
-		setErrorMessage(`Added ${nameObject.name} `);
-		setTimeout(() => {
-			setErrorMessage(null);
-		}, 5000);
 	};
 
 	const handleNameChange = (event) => {
