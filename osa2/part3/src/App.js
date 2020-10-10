@@ -128,7 +128,7 @@ const App = () => {
 					setNewName("");
 					setNewNumber("");
 				} else {
-					setErrorMessage("Name must be unique");
+					setErrorMessage("Name must be unique, try again");
 					setTimeout(() => {
 						setErrorMessage(null);
 					}, 5000);

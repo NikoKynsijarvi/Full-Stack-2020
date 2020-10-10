@@ -33,7 +33,7 @@ const personSchema = new mongoose.Schema({
 	},
 });
 if (personSchema.plugin(uniqueValidator)) {
-	console.log("Nimen tulee olla uniikki");
+	console.log("nimen tulee olla uniikki");
 }
 
 personSchema.set("toJSON", {
