@@ -23,7 +23,7 @@ const favoriteBlog = (blogs) => {
 
 const mostBlogs = (blogs) => {
 	const authors = blogs.map((author) => author.author);
-	console.log(authors);
+
 	const amountOfBlogs = authors.map((author) => {
 		const amount = authors.filter((a) => author === a).length;
 
@@ -34,8 +34,15 @@ const mostBlogs = (blogs) => {
 		return result;
 	});
 	console.log(amountOfBlogs);
-	amountOfBlogs.sort((a, b) => b.blogs - a.blogs);
-	return amountOfBlogs[0];
+	var i = 0;
+
+	amountOfBlogs.forEach((element, index) => {
+		if (element.blogs >= i) {
+			i = index;
+		}
+	});
+
+	return amountOfBlogs[i];
 };
 
 const mostLikes = (blogs) => {
@@ -44,7 +51,7 @@ const mostLikes = (blogs) => {
 	const numberOfAuthors = authors.filter(
 		(item, i, arr) => arr.indexOf(item) === i
 	);
-	console.log(numberOfAuthors);
+
 	const amountOfLikes = numberOfAuthors.map((author) => {
 		const authorBlogs = blogs.filter((blog) => author === blog.author);
 		const amount = authorBlogs.reduce((sum, likes) => {
@@ -56,8 +63,17 @@ const mostLikes = (blogs) => {
 		};
 		return result;
 	});
-	amountOfLikes.sort((a, b) => b.likes - a.likes);
-	return amountOfLikes[0];
+	console.log(amountOfLikes);
+	var i = 0;
+	amountOfLikes.forEach((element, index) => {
+		console.log(element.likes + " blogs");
+		if (element.likes > i) {
+			console.log(index + "index");
+			i = index;
+		}
+	});
+
+	return amountOfLikes[i - 1];
 };
 
 module.exports = {

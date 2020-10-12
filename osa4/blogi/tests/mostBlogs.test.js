@@ -11,6 +11,15 @@ describe("most blogs", () => {
 			__v: 0,
 		},
 		{
+			_id: "5a422ba71b54a676234d17fb",
+			title: "TDD harms architecture",
+			author: "Robert C. Martin",
+			url:
+				"http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html",
+			likes: 0,
+			__v: 0,
+		},
+		{
 			_id: "5a422aa71b54a676234d17f8",
 			title: "Go To Statement Considered Harmful",
 			author: "Edsger W. Dijkstra",
@@ -36,15 +45,7 @@ describe("most blogs", () => {
 			likes: 10,
 			__v: 0,
 		},
-		{
-			_id: "5a422ba71b54a676234d17fb",
-			title: "TDD harms architecture",
-			author: "Robert C. Martin",
-			url:
-				"http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html",
-			likes: 0,
-			__v: 0,
-		},
+
 		{
 			_id: "5a422bc61b54a676234d17fc",
 			title: "Type wars",
