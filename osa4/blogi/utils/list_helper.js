@@ -66,9 +66,7 @@ const mostLikes = (blogs) => {
 	console.log(amountOfLikes);
 	var i = 0;
 	amountOfLikes.forEach((element, index) => {
-		console.log(element.likes + " blogs");
 		if (element.likes > i) {
-			console.log(index + "index");
 			i = index;
 		}
 	});
