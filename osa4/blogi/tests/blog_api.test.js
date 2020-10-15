@@ -31,6 +31,7 @@ test("a valid blog can be added ", async () => {
 	const initialBlogs = await api.get("/api/blogs");
 	const newBlog = {
 		author: "Tonny Sinneli",
+		title: "title",
 		url: "url",
 		likes: 0,
 	};
@@ -52,6 +53,7 @@ test("Check if likes is set ", async () => {
 	const newBlog = {
 		author: "Tonny Sinneli",
 		url: "url",
+		title: "testi",
 	};
 
 	await api
