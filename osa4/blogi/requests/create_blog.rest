@@ -1,10 +1,11 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
+Authorization: bearer tunnistus
 
 {
-    "content": "Test Blog3",
-	"title": "Uusi blogi",
-	"author": "Niksu testi3",
+    "content": "Test Blog4",
+	"title": "Uusi blogi2",
+	"author": "Niksu testi4",
 	"url": "testi url",
 	"likes": 9,
 	"userId": "5f89754e6b92fd3830382f0f"
