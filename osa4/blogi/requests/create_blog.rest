@@ -1,10 +1,10 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization: bearer tunnistus
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5pa3N1IiwiaWQiOiI1Zjg5NzU0ZTZiOTJmZDM4MzAzODJmMGYiLCJpYXQiOjE2MDI4NjQ3MDN9.6AgKqfdIVyvFzfJYeQ4fvsvt87J8bdHVQI6OUl3mTJw
 
 {
-    "content": "Test Blog4",
-	"title": "Uusi blogi2",
+    "content": "Test5",
+	"title": " blogi2",
 	"author": "Niksu testi4",
 	"url": "testi url",
 	"likes": 9,
