@@ -6,5 +6,6 @@ Content-Type: application/json
 	"title": "Uusi blogi",
 	"author": "Niksu testi3",
 	"url": "testi url",
-	"likes": 9
+	"likes": 9,
+	"userId": "5f89754e6b92fd3830382f0f"
 }
