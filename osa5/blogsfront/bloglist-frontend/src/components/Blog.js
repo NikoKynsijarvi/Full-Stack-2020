@@ -1,7 +1,7 @@
-import userEvent from "@testing-library/user-event";
 import React, { useState } from "react";
-import blogs from "../services/blogs";
-const Blog = ({ blog }) => {
+import blogService from "./../services/blogs";
+
+const Blog = ({ blog, setBlogs, setErrorMessage }) => {
 	const blogStyle = {
 		paddingTop: 10,
 		paddingLeft: 2,
@@ -9,6 +9,35 @@ const Blog = ({ blog }) => {
 		borderWidth: 1,
 		marginBottom: 5,
 		paddingBottom: 10,
+	};
+
+	const addLike = (event) => {
+		event.preventDefault();
+		const blogObject = {
+			title: blog.title,
+			author: blog.author,
+			url: blog.author,
+			likes: blog.likes + 1,
+		};
+		blogService.update(blog.id, blogObject).then((initialBlogs) => {
+			blogService.getAll().then((initialBlogs) => {
+				setBlogs(initialBlogs);
+			});
+		});
+	};
+	const addDislike = (event) => {
+		event.preventDefault();
+		const blogObject = {
+			title: blog.title,
+			author: blog.author,
+			url: blog.author,
+			likes: blog.likes - 1,
+		};
+		blogService.update(blog.id, blogObject).then((initialBlogs) => {
+			blogService.getAll().then((initialBlogs) => {
+				setBlogs(initialBlogs);
+			});
+		});
 	};
 
 	const [blogVisible, setBlogVisible] = useState(false);
@@ -22,7 +51,29 @@ const Blog = ({ blog }) => {
 				<br></br>
 				{blog.author} <br></br>
 				{blog.url} <br></br>
-				likes: {blog.likes} <button>like</button>
+				likes: {blog.likes} <button onClick={addLike}>like</button>
+				<button onClick={addDislike}>dislike</button>
+				<br></br>
+				<button
+					onClick={() => {
+						var result = window.confirm(
+							"delete " + blog.title + " by " + blog.author + "?"
+						);
+						if (result === true) {
+							blogService.deleteThis(blog.id).then((initialBlogs) => {
+								blogService.getAll().then((initialBlogs) => {
+									setBlogs(initialBlogs);
+									setErrorMessage(`Deleted ${blog.title} `);
+									setTimeout(() => {
+										setErrorMessage(null);
+									}, 5000);
+								});
+							});
+						}
+					}}
+				>
+					delete
+				</button>
 			</div>
 			<div style={hideWhenVisible}>
 				{blog.title} {blog.author}

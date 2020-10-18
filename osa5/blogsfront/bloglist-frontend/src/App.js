@@ -7,7 +7,9 @@ import BlogForm from "./components/BlogForm";
 
 const App = () => {
 	const [blogs, setBlogs] = useState([]);
-
+	blogs.sort(function (a, b) {
+		return b.likes - a.likes;
+	});
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [user, setUser] = useState(null);
@@ -122,7 +124,12 @@ const App = () => {
 			{blogForm()}
 			{blogs.map((blog) => (
 				<div>
-					<Blog key={blog.id} blog={blog} />
+					<Blog
+						key={blog.id}
+						blog={blog}
+						setBlogs={setBlogs}
+						setErrorMessage={setErrorMessage}
+					/>
 				</div>
 			))}
 		</div>
