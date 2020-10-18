@@ -44,7 +44,7 @@ const BlogForm = ({ createBlog }) => {
 					author: <input value={newAuthor} onChange={handleAuthorChange} />{" "}
 					<br></br>
 					url: <input value={newUrl} onChange={handleUrlChange} /> <br></br>
-					<button type="submit">create</button>
+					<button type="submit">create new blog</button>
 				</form>
 				<button onClick={() => setLoginVisible(false)}>cancel</button>
 			</div>

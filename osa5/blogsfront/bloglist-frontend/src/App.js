@@ -119,11 +119,12 @@ const App = () => {
 					</button>
 				</p>
 			</div>
-			{blogs.map((blog) => (
-				<Blog key={blog.id} blog={blog} />
-			))}
-
 			{blogForm()}
+			{blogs.map((blog) => (
+				<div>
+					<Blog key={blog.id} blog={blog} />
+				</div>
+			))}
 		</div>
 	);
 };
