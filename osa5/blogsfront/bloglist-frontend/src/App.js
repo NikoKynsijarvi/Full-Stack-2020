@@ -3,19 +3,16 @@ import Blog from "./components/Blog";
 import blogService from "./services/blogs";
 import loginService from "./services/login";
 import Notification from "./components/notification";
-import LoginForm from "./components/LoginForm";
-import Togglalbe from "./components/Togglalbe";
+import BlogForm from "./components/BlogForm";
 
 const App = () => {
 	const [blogs, setBlogs] = useState([]);
-	const [newTitle, setNewTitle] = useState("");
-	const [newAuthor, setNewAuthor] = useState("");
-	const [newUrl, setNewUrl] = useState("");
+
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [user, setUser] = useState(null);
 	const [errorMessage, setErrorMessage] = useState(null);
-	const [loginVisible, setLoginVisible] = useState(false);
+
 	useEffect(() => {
 		blogService.getAll().then((blogs) => setBlogs(blogs));
 	}, []);
@@ -52,36 +49,7 @@ const App = () => {
 			}, 5000);
 		}
 	};
-	const addBlog = (event) => {
-		event.preventDefault();
-		console.log(newTitle);
-		const blogObject = {
-			title: newTitle,
-			author: newAuthor,
-			url: newUrl,
-			id: blogs.length + 1,
-		};
-		blogService.create(blogObject).then((returnedBlog) => {
-			setBlogs(blogs.concat(returnedBlog));
-			setNewTitle("");
-			setNewAuthor("");
-			setNewUrl("");
-		});
 
-		setErrorMessage(`Added ${blogObject.title}`);
-		setTimeout(() => {
-			setErrorMessage(null);
-		}, 5000);
-	};
-	const handleTitleChange = (event) => {
-		setNewTitle(event.target.value);
-	};
-	const handleAuthorChange = (event) => {
-		setNewAuthor(event.target.value);
-	};
-	const handleUrlChange = (event) => {
-		setNewUrl(event.target.value);
-	};
 	const handeLogout = async (event) => {
 		setErrorMessage("Logged out");
 		setTimeout(() => {
@@ -116,33 +84,18 @@ const App = () => {
 			<button type="submit">login</button>
 		</form>
 	);
-	const blogForm = () => {
-		const hideWhenVisible = { display: loginVisible ? "none" : "" };
-		const showWhenVisible = { display: loginVisible ? "" : "none" };
 
-		return (
-			<div>
-				<div style={hideWhenVisible}>
-					<button onClick={() => setLoginVisible(true)}>new blog</button>
-				</div>
-				<div style={showWhenVisible}>
-					<h2>Create new</h2>
-					<form onSubmit={addBlog}>
-						title: <input value={newTitle} onChange={handleTitleChange} />{" "}
-						<br></br>
-						author: <input
-							value={newAuthor}
-							onChange={handleAuthorChange}
-						/>{" "}
-						<br></br>
-						url: <input value={newUrl} onChange={handleUrlChange} /> <br></br>
-						<button type="submit">create</button>
-					</form>
-					<button onClick={() => setLoginVisible(false)}>cancel</button>
-				</div>
-			</div>
-		);
+	const addBlog = (blogObject) => {
+		blogService.create(blogObject).then((returnedBlog) => {
+			setBlogs(blogs.concat(returnedBlog));
+		});
+		setErrorMessage(`Added ${blogObject.title}`);
+		setTimeout(() => {
+			setErrorMessage(null);
+		}, 5000);
 	};
+
+	const blogForm = () => <BlogForm createBlog={addBlog} />;
 
 	if (user === null) {
 		return (

@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 
 const BlogForm = ({ createBlog }) => {
-	const [errorMessage, setErrorMessage] = useState(null);
-	const [blogs, setBlogs] = useState([]);
+	const [loginVisible, setLoginVisible] = useState(false);
+	const hideWhenVisible = { display: loginVisible ? "none" : "" };
+	const showWhenVisible = { display: loginVisible ? "" : "none" };
+
 	const [newTitle, setNewTitle] = useState("");
 	const [newAuthor, setNewAuthor] = useState("");
 	const [newUrl, setNewUrl] = useState("");
+
 	const handleTitleChange = (event) => {
 		setNewTitle(event.target.value);
 	};
@@ -17,33 +20,34 @@ const BlogForm = ({ createBlog }) => {
 	};
 	const addBlog = (event) => {
 		event.preventDefault();
-		console.log(newTitle);
-		createBlog = {
+		createBlog({
 			title: newTitle,
 			author: newAuthor,
 			url: newUrl,
-			id: blogs.length + 1,
-		};
+		});
 
 		setNewTitle("");
-		setNewUrl("");
 		setNewAuthor("");
-
-		setErrorMessage(`Added new blog`);
-		setTimeout(() => {
-			setErrorMessage(null);
-		}, 5000);
+		setNewUrl("");
 	};
+
 	return (
 		<div>
-			<h2>Create new</h2>
-			<form onSubmit={addBlog}>
-				title: <input value={newTitle} onChange={handleTitleChange} /> <br></br>
-				author: <input value={newAuthor} onChange={handleAuthorChange} />{" "}
-				<br></br>
-				url: <input value={newUrl} onChange={handleUrlChange} /> <br></br>
-				<button type="submit">create</button>
-			</form>
+			<div style={hideWhenVisible}>
+				<button onClick={() => setLoginVisible(true)}>new blog</button>
+			</div>
+			<div style={showWhenVisible}>
+				<h2>Create new</h2>
+				<form onSubmit={addBlog}>
+					title: <input value={newTitle} onChange={handleTitleChange} />{" "}
+					<br></br>
+					author: <input value={newAuthor} onChange={handleAuthorChange} />{" "}
+					<br></br>
+					url: <input value={newUrl} onChange={handleUrlChange} /> <br></br>
+					<button type="submit">create</button>
+				</form>
+				<button onClick={() => setLoginVisible(false)}>cancel</button>
+			</div>
 		</div>
 	);
 };
