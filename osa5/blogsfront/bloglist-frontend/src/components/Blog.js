@@ -45,7 +45,7 @@ const Blog = ({ blog, setBlogs, setErrorMessage }) => {
 	const hideWhenVisible = { display: blogVisible ? "none" : "" };
 	const showWhenVisible = { display: blogVisible ? "" : "none" };
 	return (
-		<div style={blogStyle}>
+		<div style={blogStyle} className="blog">
 			<div style={showWhenVisible}>
 				{blog.title}
 				<button onClick={() => setBlogVisible(false)}>hide</button>
