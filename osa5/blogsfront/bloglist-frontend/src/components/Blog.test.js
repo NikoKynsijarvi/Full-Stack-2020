@@ -11,7 +11,7 @@ const blog = {
 	likes: 2,
 };
 
-test("renders only title and author by default", () => {
+test("only renders title and author", () => {
 	const component = render(<Blog blog={blog} />);
 	component.debug();
 
@@ -22,7 +22,7 @@ test("renders only title and author by default", () => {
 	expect(component.container).not.toHaveTextContent(blog.likes);
 });
 
-test("renders only title and author by default", () => {
+test("renders all info from the blog", () => {
 	const component = render(<Blog blog={blog} />);
 	const button = component.getByText("view");
 
@@ -31,11 +31,10 @@ test("renders only title and author by default", () => {
 
 	expect(component.container).toHaveTextContent(blog.title);
 	expect(component.container).toHaveTextContent(blog.author);
-
 	expect(component.container).toHaveTextContent(blog.url);
 	expect(component.container).toHaveTextContent(blog.likes);
 });
-test("like is pressed twice causes two onLiked events", () => {
+test("like is pressed twice", () => {
 	const mockHandlerUpdate = jest.fn();
 	const component = render(<Blog blog={blog} />);
 	const button = component.getByText("view");
