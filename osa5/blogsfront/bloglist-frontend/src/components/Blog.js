@@ -17,7 +17,7 @@ const Blog = ({ blog, setBlogs, setErrorMessage }) => {
 		const blogObject = {
 			title: blog.title,
 			author: blog.author,
-			url: blog.author,
+			url: blog.url,
 			likes: blog.likes + 1,
 		};
 		blogService.update(blog.id, blogObject).then((initialBlogs) => {
@@ -31,7 +31,7 @@ const Blog = ({ blog, setBlogs, setErrorMessage }) => {
 		const blogObject = {
 			title: blog.title,
 			author: blog.author,
-			url: blog.author,
+			url: blog.url,
 			likes: blog.likes - 1,
 		};
 		blogService.update(blog.id, blogObject).then((initialBlogs) => {
@@ -44,8 +44,19 @@ const Blog = ({ blog, setBlogs, setErrorMessage }) => {
 	const [blogVisible, setBlogVisible] = useState(false);
 	const hideWhenVisible = { display: blogVisible ? "none" : "" };
 	const showWhenVisible = { display: blogVisible ? "" : "none" };
+
+	if (blogVisible === false) {
+		return (
+			<div style={hideWhenVisible}>
+				{blog.title} {blog.author}
+				<button onClick={() => setBlogVisible(true)}>view</button>
+			</div>
+		);
+	}
+
+	console.log(blogVisible);
 	return (
-		<div style={blogStyle} className="blog">
+		<div style={blogStyle}>
 			<div style={showWhenVisible}>
 				{blog.title}
 				<button onClick={() => setBlogVisible(false)}>hide</button>
@@ -75,10 +86,6 @@ const Blog = ({ blog, setBlogs, setErrorMessage }) => {
 				>
 					delete
 				</button>
-			</div>
-			<div style={hideWhenVisible}>
-				{blog.title} {blog.author}
-				<button onClick={() => setBlogVisible(true)}>view</button>
 			</div>
 		</div>
 	);
