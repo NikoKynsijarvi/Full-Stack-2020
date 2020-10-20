@@ -63,7 +63,10 @@ const Blog = ({ blog, setBlogs, setErrorMessage }) => {
 				<br></br>
 				{blog.author} <br></br>
 				{blog.url} <br></br>
-				likes: {blog.likes} <button onClick={addLike}>like</button>
+				likes: {blog.likes}{" "}
+				<button onClick={addLike} id="like">
+					like
+				</button>
 				<button onClick={addDislike}>dislike</button>
 				<br></br>
 				<button
