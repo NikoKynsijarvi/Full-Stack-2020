@@ -40,11 +40,18 @@ const BlogForm = ({ createBlog }) => {
 			<div style={showWhenVisible}>
 				<h2>Create new</h2>
 				<form onSubmit={addBlog}>
-					title: <input value={newTitle} onChange={handleTitleChange} />{" "}
+					title:{" "}
+					<input id="title" value={newTitle} onChange={handleTitleChange} />{" "}
 					<br></br>
-					author: <input value={newAuthor} onChange={handleAuthorChange} />{" "}
+					author:{" "}
+					<input
+						id="author"
+						value={newAuthor}
+						onChange={handleAuthorChange}
+					/>{" "}
 					<br></br>
-					url: <input value={newUrl} onChange={handleUrlChange} /> <br></br>
+					url: <input id="url" value={newUrl} onChange={handleUrlChange} />{" "}
+					<br></br>
 					<button type="submit">create new blog</button>
 				</form>
 				<button onClick={() => setLoginVisible(false)}>cancel</button>

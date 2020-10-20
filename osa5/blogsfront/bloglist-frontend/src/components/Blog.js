@@ -47,9 +47,11 @@ const Blog = ({ blog, setBlogs, setErrorMessage }) => {
 
 	if (blogVisible === false) {
 		return (
-			<div style={hideWhenVisible}>
-				{blog.title} {blog.author}
-				<button onClick={() => setBlogVisible(true)}>view</button>
+			<div style={blogStyle}>
+				<div style={hideWhenVisible}>
+					{blog.title} {blog.author}
+					<button onClick={() => setBlogVisible(true)}>view</button>
+				</div>
 			</div>
 		);
 	}
