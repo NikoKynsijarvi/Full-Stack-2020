@@ -38,7 +38,11 @@ const anecdoteReducer = (state = initialState, action) => {
 	if (action.type === "NEW_ANECDOTE") {
 		console.log(action, "action");
 		return [...state, action.data];
-	} else return state;
+	}
+	if (action.type === "FILTER") {
+		console.log(action.data.filter);
+		return (state = action.data.filter);
+	} else return initialState;
 };
 export const voteFor = (id) => {
 	console.log("vote", id);
@@ -56,6 +60,12 @@ export const createAnecdote = (content) => {
 
 			id: getId(),
 		},
+	};
+};
+export const filter = (filter) => {
+	return {
+		type: "FILTER",
+		data: { filter },
 	};
 };
 

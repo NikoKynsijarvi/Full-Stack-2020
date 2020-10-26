@@ -1,4 +1,6 @@
-const notificationReducer = (state = { text: "" }, action) => {
+const initialState = "";
+
+const notificationReducer = (state = initialState, action) => {
 	if (action.type === "VOTE") {
 		state = { text: "Voted anecdote " };
 
@@ -11,15 +13,9 @@ const notificationReducer = (state = { text: "" }, action) => {
 	if (action.type === "REMOVE_NOTIFICATION") {
 		state = { text: "" };
 		return state.text;
-	} else return null;
+	} else return state;
 };
-export const voteFor2 = (id) => {
-	return {
-		type: "VOTE",
-		text: "Voted",
-		data: { id },
-	};
-};
+
 export const removeNotification = () => {
 	return {
 		type: "REMOVE_NOTIFICATION",

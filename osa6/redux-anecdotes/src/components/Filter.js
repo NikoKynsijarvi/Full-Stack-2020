@@ -1,5 +1,5 @@
 import React from "react";
-import { filter } from "../reducers/filterReducer";
+import { filter } from "../reducers/anecdoteReducer";
 import { useDispatch, useSelector } from "react-redux";
 
 const Filter = () => {
@@ -10,10 +10,7 @@ const Filter = () => {
 	console.log(anecdotes, "Joo");
 	const handleChange = (event) => {
 		const filterValue = event.target.value;
-		console.log(filterValue);
-		if (filterValue === undefined || filterValue === null) {
-			filterValue = "";
-		}
+		console.log(filterValue, "Filter value");
 
 		const n = anecdotes.filter((element) => {
 			const a = element.content;
