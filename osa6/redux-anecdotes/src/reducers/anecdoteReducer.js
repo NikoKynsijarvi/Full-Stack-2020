@@ -42,7 +42,7 @@ const anecdoteReducer = (state = initialState, action) => {
 	if (action.type === "FILTER") {
 		console.log(action.data.filter);
 		return (state = action.data.filter);
-	} else return initialState;
+	} else return state;
 };
 export const voteFor = (id) => {
 	console.log("vote", id);
