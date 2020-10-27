@@ -9,8 +9,6 @@ import anecdoteReducer, {
 
 import store from "./store";
 
-anecdoteService.getAll().then((a) => store.dispatch(initializeAnecdotes(a)));
-
 ReactDOM.render(
 	<Provider store={store}>
 		<App />

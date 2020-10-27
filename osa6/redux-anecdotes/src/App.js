@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 const App = () => {
 	const dispatch = useDispatch();
 	useEffect(() => {
-		anecdoteService.getAll().then((a) => dispatch(initializeAnecdotes(a)));
+		dispatch(initializeAnecdotes());
 	}, [dispatch]);
 	return (
 		<div>

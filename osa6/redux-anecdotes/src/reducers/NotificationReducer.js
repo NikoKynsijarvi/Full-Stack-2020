@@ -4,7 +4,7 @@ const notificationReducer = (state = { text: "" }, action) => {
 
 		return state.text;
 	}
-	if (action.type === "NEW_ANECDOTE") {
+	if (action.type === "INIT_ANECDOTES") {
 		state = { text: "Added new anecdote" };
 		return state.text;
 	}
