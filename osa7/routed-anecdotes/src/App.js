@@ -104,10 +104,16 @@ const CreateNew = (props) => {
 		e.preventDefault();
 		props.addNew({
 			content: content.value,
-			author: content.value,
-			info: content.value,
+			author: author.value,
+			info: url.value,
 			votes: 0,
 		});
+	};
+
+	const resetAll = () => {
+		content.reset();
+		author.reset();
+		url.reset();
 	};
 
 	return (
@@ -116,26 +122,19 @@ const CreateNew = (props) => {
 			<form onSubmit={handleSubmit}>
 				<div>
 					content
-					<input
-						name={content.type}
-						value={content.value}
-						onChange={content.onChange}
-					/>
+					<input {...content} />
 				</div>
 				<div>
 					author
-					<input
-						name={author.type}
-						value={author.value}
-						onChange={author.onChange}
-					/>
+					<input {...author} />
 				</div>
 				<div>
 					url for more info
-					<input name={url.type} value={url.value} onChange={url.onChange} />
+					<input {...url} />
 				</div>
 				<button>create</button>
 			</form>
+			<button onClick={resetAll}>reset</button>
 		</div>
 	);
 };
